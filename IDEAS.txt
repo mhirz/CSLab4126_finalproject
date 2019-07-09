@@ -1,0 +1,28 @@
+1.) Gemeinden zambringen
+	(möglichkeit einer Nummerntafel/hausnummer zu schreiben, wnn wer falsch parkt mit seiner wohnung was is.. 
+	dass ma sich quasi gegnseitig aufmerksam machen kann ohne eine Polizei zu brauchen)	
+
+2.) Feedbacksystem und Ideenbörse Wu
+	eine Möglichkeit um nicht nur standardmäßig Feedback zu geben sondern Vorschläge und Anregungen anderer upvoten zu können
+	sowas wie eine Diskussionsplattform um mißstände aufzuzeigen und gemeinsam Vorschläge und Lösungen einzubringen
+
+3.) Organistaionstool fürs WU studiern
+	quasi ein kalender wo man seine unitermine verrwaltet und anhand der Kurse immer erinnert wird, wann ma was vorbereiten soll
+	empfiehlt einen Lernplan und was ma für welche Prüfung beachten sollte
+
+4.) Online CV
+	Eigene Webseite auf der man als Programmierer/Datascientist seine Projekte hochladen kann 
+	mit einem Key ist es für den potenziellen Arbeitgeber möglich den Sourcecode anzusehen, die Projekte ausführen kann jeder
+	zusätzlich noch irgentwelche Infos
+	Arbeitgeber kann rätsel stellen und eine bestimmte Zeit vorgeben innerhalb der er eeine Lösung submitten kann
+
+5.) An sein zukänftiges Ich
+	Man kann ein Video/Brief an sich selbst hochladen oder irgentwas ausfüllen wo man sich in einer gewissen zeit sieht
+	Wenn die zeit abgelaufen ist bekommt ma a email
+	kännen puch kurzfristige ziel sein 
+	Möglichkeit ein Video hochzuladen das die Familie anschaun kann wenn ma stirbt
+
+6.) Motivastionsplattform
+	Leute finden die ähnliche ziele haben auf der ganzen Welt
+	Man pusht sich gegenseitig und gratuliert sich zu Erfolgen und wird dazu animiert seinen Partnern motivation zukommen zu lassen
+	man ist der Durchschnitt aus den leuten mit denen man sich umgibt
