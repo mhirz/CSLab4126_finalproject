@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+ <!-- Meet the Team -->
+        <div class="container-fluid padding">
+            <div class="row welcome text-center">
+                <div class="col-12">
+                    <h1 class="display-4">Meet the team</h1>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="container-fluid padding">
+
+            <div class="row padding col">
+                {% for member in team %}
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top" src="../static/pics/team1.png">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ member[0] }}</h4>
+                                <p class="card-text">
+                                    {{ member[1] }}
+                                </p>
+                                <a href="#" class="btn btn-outline-secondary">Mehr erfahren</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <hr class="my-4">
+        </div>
+{% endblock content %}

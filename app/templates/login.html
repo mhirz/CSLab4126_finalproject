@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+        <div class="content-section col-xs-12 col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid padding">
+            <form action="" method="POST" novalidate>
+                <fieldset class="form.group">
+                    <legend class="border-bottom mb-4">Irgentein Begrüßungssatz</legend>
+                    <div class="form-group">
+
+                    </div>
+                     <div class="form-group">
+
+                    </div>
+                    <div class="form-check">
+
+                    </div>
+                </fieldset>
+                <div class="form-group">
+
+                </div>
+                <small class="text-muted ml-2">
+                    <a href="#">Passwort vergessen?</a>
+                </small>
+            </form>
+            <div class="border-top pt-3">
+        <small class="text-muted">
+            Noch keinen Account? <a class="ml-2" href="{{ url_for('register') }}">Registrieren</a>
+        </small>
+    </div>
+        </div>
+
+{% endblock content %}

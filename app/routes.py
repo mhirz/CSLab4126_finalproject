@@ -1,23 +1,32 @@
 from app import app
-from flask import render_template, flash, redirect, request
-from flask_login import login_user, logout_user, login_required
+from flask import render_template, request, flash
 from app.login import LoginForm, RegistrationForm
-from app.models import User
 
-
-# landingpage general
+# landingpage
+@app.route("/index")
+@app.route("/home")
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template('index.html', title="Startseite")
 
-from app import app, db, login_manager, models, bcrypt
-from flask import render_template, flash, redirect, request
-from flask_login import login_user, logout_user, login_required
-from app.login import LoginForm, RegistrationForm
-from app.models import User
+# login
+@app.route("/login", methods=['GET','POST'])
+def login():
+    form = LoginForm
+    return render_template('login.html', title="Login", form=form)
+
+# register
+@app.route("/register")
+def register():
+    return render_template('register.html', title="Registrieren")
+
+@app.route("/about")
+def about():
+
+    # team members could be loaded from database not hard coded
+    team = [["Dave", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam"],
+            ["Markus", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam"],]
+
+    return render_template('about.html', title='About', team=team)
 
 
-# landingpage general
-@app.route("/")
-def index():
-    return render_template('index.html')
