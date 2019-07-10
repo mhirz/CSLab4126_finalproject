@@ -1,4 +1,4 @@
-from app import app, db, login_manager, models, bcrypt
+from app import app
 from flask import render_template, flash, redirect, request
 from flask_login import login_user, logout_user, login_required
 from app.login import LoginForm, RegistrationForm
