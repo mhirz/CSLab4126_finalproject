@@ -9,7 +9,7 @@ def index():
     return render_template('index.html', title="Startseite")
 
 
-@app.route("/register")
+@app.route("/register", methods=['GET','POST'])
 def register():
     form = RegistrationForm()
 
@@ -24,15 +24,15 @@ def register():
             flash('Ein Passwort ist erforderlich', 'warning')
             return redirect('/register')
 
-    if form.validate_on_submit():
-        # username must not exist in the database yet
-        if not User(email).set_password(password).register():
-            flash('Diese Email wird bereits verwendet. Bitte wähle eine andere', 'warning')
-            return redirect('/register')
+        if form.validate_on_submit():
+            # username must not exist in the database yet
+            if not User(email).set_password(password).register():
+                flash('Diese Email wird bereits verwendet. Bitte wähle eine andere', 'warning')
+                return redirect('/register')
 
-        # if registration successful -> redirected to login
-        flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
-        return redirect('/login')
+            # if registration successful -> redirected to login
+            flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
+            return redirect('/login')
 
     return render_template('register.html', title = 'Register', form = form)
 
@@ -60,7 +60,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@app.route('/forgot_pw')
+@app.route('/forgot_pw', methods=['GET','POST'])
 def forgot_pw():
     form = ForgotPw()
     return render_template('forgot_pw.html', title='Passwort zurücksetzen', form=form)
@@ -75,8 +75,11 @@ def add_request():
     text = request.form['text']
     payment = request.form['payment']
 
-    user.add_request(title, tags, text, payment)
-    return redirect(url_for('/index'))
+    if form.validate_on_submit():
+        user.add_request(title, tags, text, payment)
+        return redirect(url_for('/index'))
+
+    return render_template('forgot_pw.html', title='Login', form=form)
 
 
 @app.route('/add_offer', methods=['GET', 'POST'])

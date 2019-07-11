@@ -47,7 +47,7 @@ class User:
         user = self.find()
         offer = Node(
             "offer",
-            id=str(uuid,uuid4()),
+            id=str(uuid.uuid4()),
             title=title,
             text=text,
             tag=tags,
@@ -58,13 +58,20 @@ class User:
         rel = Relationship(user, "CREATED", offer)
         graph.create(rel)
 
+        tags = [x.strip() for x in tags.lower().split(' ')]
+        for t in tags:
+            # if label is not found it is created
+            tag = graph.merge_one("Tag", "name", t)
+            rel = Relationship(tag, "T TAGGED", offer)
+            graph.create(rel)
+
     def add_request(self, title, tags, text, payment):
         import uuid
 
         user = self.find()
         request = Node(
             "request",
-            id=str(uuid, uuid4()),
+            id=str(uuid.uuid4()),
             author=self.mail,
             title=title,
             text=text,
@@ -76,6 +83,8 @@ class User:
         rel = Relationship(user, "CREATED", request)
         graph.create(rel)
 
-
-    def __repr__(self):
-        return ''%self.username
+        tags = [x.strip() for x in tags.lower().split(' ')]
+        for t in tags:
+            tag = graph.merge_one("Tag", "name", t)
+            rel = Relationship(tag, "T TAGGED", request)
+            graph.create(rel)
