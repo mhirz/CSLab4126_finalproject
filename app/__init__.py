@@ -7,4 +7,4 @@ app.config.from_object(Config)
 
 # DB stuff
 
-from app import routes#, models
+from app import routes, models

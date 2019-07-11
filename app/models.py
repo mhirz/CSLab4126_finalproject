@@ -1,15 +1,81 @@
-from app import app
-from flask_login import UserMixin
+from py2neo import Graph, Node, Relationship
+from passlib.hash import bcrypt
 
-class User(UserMixin):
+graph = Graph()
+
+class User:
 
     # Dave please implement how users are saved to DB
 
-    def __init__(self, surename, lastname, email, password,):
-        self.surename = surename
+    def __init__(self, email):
+        self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.password = password
+
+    def set_password(self, password):
+        self.password = bcrypt.encrypt(password)
+        return self
+
+    def find(self):
+        user = graph.find_one
+        return user
+
+    def register(self):
+        if not self.find():
+            user = Node("User",
+                        firstname=self.firstname,
+                        lastname=self.lastname,
+                        email=self.email,
+                        password=self.password)
+
+            graph.create(user)
+            return True
+        else:
+            return False
+
+    def verify_password(self, password):
+        user = self.find()
+        if user:
+            return bcrypt.verify(password, user['password'])
+        else:
+            return False
+
+    def add_offer(self, title, tags, text, payment):
+        import uuid
+
+        user = self.find()
+        offer = Node(
+            "offer",
+            id=str(uuid,uuid4()),
+            title=title,
+            text=text,
+            tag=tags,
+            payment=payment,
+            timestamp=timestamp(),
+            date=date()
+        )
+        rel = Relationship(user, "CREATED", offer)
+        graph.create(rel)
+
+    def add_request(self, title, tags, text, payment):
+        import uuid
+
+        user = self.find()
+        request = Node(
+            "request",
+            id=str(uuid, uuid4()),
+            author=self.mail,
+            title=title,
+            text=text,
+            tag=tags,
+            payment=payment,
+            timestamp=timestamp(),
+            date=date()
+        )
+        rel = Relationship(user, "CREATED", request)
+        graph.create(rel)
+
 
     def __repr__(self):
         return ''%self.username
