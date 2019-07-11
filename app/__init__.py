@@ -1,10 +1,15 @@
-from flask import Flask
 from config import Config
+from app import routes, models
+from app.models import graph
+from app.routes import app
 
 
-app = Flask(__name__)
 app.config.from_object(Config)
 
-# DB stuff
+#graph.schema.create_uniqueness_constraint("User", "username")
+#graph.schema.create_uniqueness_constraint("Tag", "name")
+#graph.schema.create_uniqueness_constraint("Post", "id")
 
-from app import routes, models
+
+
+

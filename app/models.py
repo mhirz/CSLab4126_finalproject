@@ -1,25 +1,36 @@
 from py2neo import Graph, Node, Relationship
 from passlib.hash import bcrypt
+from datetime import datetime
+import os
+import uuid
 
+# Dave bitte implementiern.
+#url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
+#username = os.environ.get('NEO4J_USERNAME')
+#password = os.environ.get('NEO4J_PASSWORD')
+
+
+#graph = Graph(url + '/db/data/', username=username, password=password)
+# delete following line
 graph = Graph()
 
 class User:
-
-    # Dave please implement how users are saved to DB
-
-    def __init__(self, email):
+    def __init__(self, firstname, lastname, email, password):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.password = password
 
-    def set_password(self, password):
-        self.password = bcrypt.encrypt(password)
-        return self
 
     def find(self):
         user = graph.find_one
         return user
+
+
+    def set_password(self, password):
+        self.password = bcrypt.encrypt(password)
+        return self
+
 
     def register(self):
         if not self.find():
@@ -34,12 +45,14 @@ class User:
         else:
             return False
 
+
     def verify_password(self, password):
         user = self.find()
         if user:
             return bcrypt.verify(password, user['password'])
         else:
             return False
+
 
     def add_offer(self, title, tags, text, payment):
         import uuid
@@ -64,6 +77,7 @@ class User:
             tag = graph.merge_one("Tag", "name", t)
             rel = Relationship(tag, "T TAGGED", offer)
             graph.create(rel)
+
 
     def add_request(self, title, tags, text, payment):
         import uuid

@@ -1,8 +1,9 @@
-from app import app
-from flask import render_template, request, flash, session, url_for, abort, redirect
+#from app import app
+from flask import Flask, render_template, request, flash, session, url_for, abort, redirect
 from app.forms import LoginForm, RegistrationForm, AddOffer, AddRequest, ForgotPw
 from app.models import *
 
+app = Flask(__name__)
 
 @app.route("/")
 def index():
