@@ -14,26 +14,24 @@ def index():
 def register():
     form = RegistrationForm()
 
-    if request.method == 'Post':
+    if request.method == 'POST':
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
-
-        try:
-            password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
-        except ValueError:
-            flash('Ein Passwort ist erforderlich', 'warning')
-            return redirect('/register')
+        password = bcrypt.encrypt(request.form['password'])
+        # query iuser from database
+        #user =
 
         if form.validate_on_submit():
             # username must not exist in the database yet
-            if not User(email).set_password(password).register():
+            if not User(firstname, lastname, email, password).register():
                 flash('Diese Email wird bereits verwendet. Bitte wähle eine andere', 'warning')
                 return redirect('/register')
 
             # if registration successful -> redirected to login
             flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
             return redirect('/login')
+        flash('Well!', 'warning')
 
     return render_template('register.html', title = 'Register', form = form)
 
