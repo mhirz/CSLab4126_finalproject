@@ -34,6 +34,7 @@ class AddBarter(FlaskForm):
     tag = StringField("", validators=[], render_kw={"placeholder": "Tags - durch Leerzeichen getrennt"})
     payments = StringField("", validators=[], render_kw={"placeholder": "Tauschangebote - durch Leerzeichen getrennt"})
 
+
 class AddRequest(AddBarter):
     submit = SubmitField('Um Hilfe fragen')
 

@@ -86,7 +86,6 @@ def add_request():
 @app.route('/add_offer', methods=['GET', 'POST'])
 def add_offer():
     form = AddOffer()
-
     user = User(session['email'])
     title = request.form['title']
     tags = request.form['tags']
@@ -95,6 +94,7 @@ def add_offer():
 
     user.add_offer(title, tags, text, payment)
     return redirect(url_for('/index'))
+
 
 @app.route("/about")
 def about():

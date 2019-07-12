@@ -102,3 +102,7 @@ class User:
             tag = graph.merge_one("Tag", "name", t)
             rel = Relationship(tag, "T TAGGED", request)
             graph.create(rel)
+
+
+class Request:
+    pass
