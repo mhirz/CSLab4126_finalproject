@@ -2,20 +2,66 @@
 
 {% block content %}
 <!-- Jumbotron -->
-        <div class="container-fluid">
-            <div class="row jumbotron">
-                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-                    <p class="lead">
-                        Du suchst Hilfe, würdest dir gerne einen Anhänger ausborgen oder eine Leiter um endlich die Kirschen ganz oben am Baum pflücken zu können?
-                        <br>Würdest aber am liebsten mit deinem Wissen in Form einer Nachhilfestunde oder einer Einführung in MS Office bezahlen?
-                        <br>Dann werde Teil der starken Community in deiner Gemeinde und schließe Deals ab bei denen jeder gewinnt!
-                    </p>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
-                    <!-- I do not know how to make the links working when carousel1 is active... ;/ -->
-                    <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Anmelden</button></a>
-                </div>
+    <div class="container-fluid">
+        <div class="row jumbotron">
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
+                <p class="lead">
+                    Du suchst Hilfe, würdest dir gerne einen Anhänger ausborgen oder eine Leiter um endlich die Kirschen ganz oben am Baum pflücken zu können?
+                    <br>Würdest aber am liebsten mit deinem Wissen in Form einer Nachhilfestunde oder einer Einführung in MS Office bezahlen?
+                    <br>Dann werde Teil der starken Community in deiner Gemeinde und schließe Deals ab bei denen jeder gewinnt!
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+                <!-- I do not know how to make the links working when carousel1 is active... ;/ -->
+                <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Anmelden</button></a>
             </div>
         </div>
+    </div>
 
+
+     <div class="container-fluid">
+        <div class="row nav-tabs">
+        <!-- NavTabs -->
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
+
+                <ul class="nav nav-tabs " role="tablist">
+                    <li role="presentation" class="active">
+
+                        <a href="#offers" aria-controls="offers" role="tab" data-toggle="tab">
+                            <button type="button" class="btn btn-outline-primary btn-lg">Hol dir Hilfe</button></a>
+                    </li>
+                    <li role="presentation" class="active">
+                        <a href="#requests" aria-controls="requests" role="tab" data-toggle="tab"><button type="button" class="btn btn-outline-primary btn-lg">Hilf aus</button></a></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- -Tabulator Content -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="offers">
+                <h1>Angebote in deiner Gemeinde</h1>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="requests">
+                <h1>Anfragen in deiner Gemeinde</h1>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Connect -->
+<hr>
+        <div class="container-fluid padding">
+            <div class="row text-center padding">
+                <div class="col-12">
+                    <h2>Connect</h2>
+                </div>
+                <div class="col-12 social padding">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <hr class="my-4">
+        </div>
 {% endblock content %}

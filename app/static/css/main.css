@@ -1,0 +1,24 @@
+
+
+.social a {
+    font-size: 4.5rem;
+    padding: 3rem;
+}
+.fa-facebook {
+    color: #3b5998;
+}
+.fa-twittter {
+    color: #00aced;
+}
+.fa-instagram {
+    color: #bc2a8d;
+}
+.fa-youtube {
+    color: #bb0000;
+}
+.fa-facebook:hover,
+.fa-twitter:hover,
+.fa-instagram:hover,
+.fa-youtube:hover {
+    color: #d5d5d5;
+}
