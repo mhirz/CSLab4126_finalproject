@@ -1,5 +1,21 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<!-- Jumbotron -->
+        <div class="container-fluid">
+            <div class="row jumbotron">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
+                    <p class="lead">
+                        Du suchst Hilfe, würdest dir gerne einen Anhänger ausborgen oder eine Leiter um endlich die Kirschen ganz oben am Baum pflücken zu können?
+                        <br>Würdest aber am liebsten mit deinem Wissen in Form einer Nachhilfestunde oder einer Einführung in MS Office bezahlen?
+                        <br>Dann werde Teil der starken Community in deiner Gemeinde und schließe Deals ab bei denen jeder gewinnt!
+                    </p>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+                    <!-- I do not know how to make the links working when carousel1 is active... ;/ -->
+                    <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Anmelden</button></a>
+                </div>
+            </div>
+        </div>
 
 {% endblock content %}
