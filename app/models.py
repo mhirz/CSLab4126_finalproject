@@ -5,14 +5,14 @@ import os
 import uuid
 
 # Dave bitte implementiern.
-#url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
+#url = os.environ.get('GRAPHENEDB_URL', 'http://40.68.34.104:7687')
 #username = os.environ.get('NEO4J_USERNAME')
 #password = os.environ.get('NEO4J_PASSWORD')
 
-
+graph = Graph("bolt://13.80.109.161:7687", auth=("neo4j", "!Markus_Dave!"))
 #graph = Graph(url + '/db/data/', username=username, password=password)
 # delete following line
-graph = Graph()
+#graph = Graph()
 
 class User:
     def __init__(self, firstname, lastname, email, password):
@@ -23,7 +23,7 @@ class User:
 
 
     def find(self):
-        user = graph.find_one
+        user = graph.find_one("User", "email", self.email)
         return user
 
 
