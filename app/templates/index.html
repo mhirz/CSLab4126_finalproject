@@ -1,25 +1,26 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<!-- Jumbotron -->
-    <div class="container-fluid">
-        <div class="row jumbotron">
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-                <p class="lead">
-                    Du suchst Hilfe, würdest dir gerne einen Anhänger ausborgen oder eine Leiter um endlich die Kirschen ganz oben am Baum pflücken zu können?
-                    <br>Würdest aber am liebsten mit deinem Wissen in Form einer Nachhilfestunde oder einer Einführung in MS Office bezahlen?
-                    <br>Dann werde Teil der starken Community in deiner Gemeinde und schließe Deals ab bei denen jeder gewinnt!
-                </p>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
-                <!-- I do not know how to make the links working when carousel1 is active... ;/ -->
-                <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Anmelden</button></a>
+<!-- Welcome Section -->
+        <div class="container-fluid padding">
+            <div class="row welcome text-center">
+                <div class="col-12">
+                    <h2 class="display-4">Spielend helfen</h2>
+                </div>
+                <hr>
+                <div class="col-12">
+                    <p class="lead">
+                        Ob es der Karl is der die Bohrmaschiene herborgt, oder die Trude die für die Matheschularbeit beim lernen helfen soll.<br>
+                        Oder einfach da Herbert der sein Wissen übers Autoschrauben weitergeben will, wir habn das Wissen in unserer Gemeinde, tauschmas doch aus!
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
 
 
-     <div class="container-fluid">
+
+
+ <div class="container-fluid">
         <div class="row">
         <!-- NavTabs -->
 
@@ -38,12 +39,75 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="offers">
                 <h1>Angebote in deiner Gemeinde</h1>
+                 <!-- Cards -->
+                <div class="container-fluid padding">
+
+                    <div class="row padding col">
+                        {% for offer in offers %}
+                            <div class="col-md-3 col-sm-6">
+                                <div class="card">
+                                    <img class="card-img-top" src="../static/img/logo.png">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ offer['title'] }}</h4>
+                                        <p class="card-text">
+                                            {{ offer['text'] }}
+                                        </p>
+                                        <a href="#" class="btn btn-outline-secondary">Hol dir Hilfe</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    <hr class="my-4">
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="requests">
                 <h1>Anfragen in deiner Gemeinde</h1>
+                <div class="container-fluid padding">
+
+                    <div class="row padding col">
+                        {% for request in requests %}
+                            <div class="col-md-3 col-sm-6">
+                                <div class="card">
+                                    <img class="card-img-top" src="../static/img/logo.png">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ request['title'] }}</h4>
+                                        <p class="card-text">
+                                            {{ request['text'] }}
+                                        </p>
+                                        <a href="#" class="btn btn-outline-secondary">Hilf aus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                    <hr class="my-4">
+                </div>
             </div>
         </div>
     </div>
+
+<!-- Jumbotron -->
+    <div class="container-fluid">
+        <div class="row jumbotron">
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
+                <p class="lead">
+                    Du suchst Hilfe, würdest dir gerne einen Anhänger ausborgen oder eine Leiter um endlich die Kirschen ganz oben am Baum pflücken zu können?
+                    <br>Würdest aber am liebsten mit deinem Wissen in Form einer Nachhilfestunde oder einer Einführung in MS Office bezahlen?
+                    <br>Dann werde Teil der starken Community in deiner Gemeinde und schließe Deals ab bei denen jeder gewinnt!
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+                <!-- I do not know how to make the links working when carousel1 is active... ;/ -->
+                <a href="{{url_for('login')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Anmelden</button></a>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 <!-- Connect -->

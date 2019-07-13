@@ -6,9 +6,9 @@ from app.routes import app
 
 app.config.from_object(Config)
 
-graph.schema.create_uniqueness_constraint("User", "email")
-graph.schema.create_uniqueness_constraint("Request", "id")
-#graph.schema.create_uniqueness_constraint("Post", "id")
+#graph.schema.create_uniqueness_constraint("User", "email")
+#graph.schema.create_uniqueness_constraint("Request", "id")
+####graph.schema.create_uniqueness_constraint("Post", "id")
 
 
 

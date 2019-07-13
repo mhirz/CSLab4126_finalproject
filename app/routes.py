@@ -7,7 +7,20 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('index.html', title="Startseite")
+    # TODO: function to get requests & offers from DB
+    offers = [{"title":"Englisch Nachhilfe",
+             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
+             "tag":"#nachhilfe #englisch #schule"},{"title":"Englisch Nachhilfe",
+             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
+             "tag":"#nachhilfe #englisch #schule"},{"title":"Englisch Nachhilfe",
+             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
+             "tag":"#nachhilfe #englisch #schule"},{"title":"Englisch Nachhilfe",
+             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
+             "tag":"#nachhilfe #englisch #schule"}]
+    requests = [{"title": "Anhänger",
+             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
+             "tag": "#anhänger #transpoert #auto"}]
+    return render_template('index.html', title="Startseite", offers=offers, requests=requests)
 
 
 @app.route("/register", methods=['GET','POST'])
