@@ -13,6 +13,9 @@
                         Ob es der Karl is der die Bohrmaschiene herborgt, oder die Trude die für die Matheschularbeit beim lernen helfen soll.<br>
                         Oder einfach da Herbert der sein Wissen übers Autoschrauben weitergeben will, wir habn das Wissen in unserer Gemeinde, tauschmas doch aus!
                     </p>
+                    <a href="{{url_for('add_request')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Um Hilfe fragen</button></a>
+                    <a href="{{url_for('add_offer')}}"><button type="button" class="btn btn-outline-secondary btn-lg">Hilfe anbieten</button></a>
+
                 </div>
             </div>
         </div>
@@ -48,11 +51,12 @@
                                 <div class="card">
                                     <img class="card-img-top" src="../static/img/logo.png">
                                     <div class="card-body">
-                                        <h4 class="card-title">{{ offer['title'] }}</h4>
+                                        <h4 class="card-title text-center">{{ offer['title'] }}</h4>
                                         <p class="card-text">
                                             {{ offer['text'] }}
                                         </p>
-                                        <a href="#" class="btn btn-outline-secondary">Hol dir Hilfe</a>
+                                        <!--TODO link with id of request attached to URL -->
+                                        <a href="" class="btn btn-outline-secondary">Hol dir Hilfe</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,10 +73,10 @@
                     <div class="row padding col">
                         {% for request in requests %}
                             <div class="col-md-3 col-sm-6">
-                                <div class="card">
+                                <div class="card padding-top">
                                     <img class="card-img-top" src="../static/img/logo.png">
                                     <div class="card-body">
-                                        <h4 class="card-title">{{ request['title'] }}</h4>
+                                        <h4 class="card-title text-center">{{ request['title'] }}</h4>
                                         <p class="card-text">
                                             {{ request['text'] }}
                                         </p>

@@ -19,6 +19,14 @@ def index():
              "tag":"#nachhilfe #englisch #schule"}]
     requests = [{"title": "Anhänger",
              "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
+             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
+             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
+             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
+             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
+             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
+             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
+             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
+             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
              "tag": "#anhänger #transpoert #auto"}]
     return render_template('index.html', title="Startseite", offers=offers, requests=requests)
 
@@ -80,6 +88,13 @@ def forgot_pw():
 
 @app.route('/add_request', methods=['GET', 'POST'])
 def add_request():
+    if request.method == 'GET':
+        try:
+            User(session['email'])
+            #TODO implement form to add new request
+        except:
+            flash('Melde dich bitte zuerst an:', 'warning')
+            return redirect('/login')
     form = AddRequest()
     user = User(session['email'])
     title = request.form['title']
@@ -96,6 +111,9 @@ def add_request():
 
 @app.route('/add_offer', methods=['GET', 'POST'])
 def add_offer():
+    if not User(session['email']):
+        flash('Melde dich bitte zuerst an:', 'warning')
+        return redirect('/login')
     form = AddOffer()
     user = User(session['email'])
     title = request.form['title']
