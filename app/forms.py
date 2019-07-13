@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
 
 
@@ -30,10 +30,10 @@ class ForgotPw(FlaskForm):
 
 class AddBarter(FlaskForm):
     title = StringField("", validators=[DataRequired(message="Du brauchst einen Titel"), Length(max=20, message="Titel darf maximal 20 Zeichen lang sein"), Regexp("^\w+$", message="Titel darf keine Sonderzeichen enthalten")], render_kw={"placeholder": "Titel"})
-    text = StringField("", validators=[DataRequired(message="Bitte gib einen Beschreibungstext an"), Length(max=500, message="Titel darf maximal 5000 Zeichen lang sein")], render_kw={"placeholder": "Beschreibungstext"})
-    tag = StringField("", validators=[], render_kw={"placeholder": "Tags - durch Leerzeichen getrennt"})
+    text = TextAreaField("", validators=[DataRequired(message="Bitte gib einen Beschreibungstext an"), Length(max=500, message="Text darf maximal 5000 Zeichen lang sein")], render_kw={"placeholder": "Beschreibungstext","rows":5})
+    tags = StringField("", validators=[], render_kw={"placeholder": "Tags - durch # getrennt"})
     payments = StringField("", validators=[], render_kw={"placeholder": "Tauschangebote - durch Leerzeichen getrennt"})
-
+    submit = SubmitField('An die Gemeinde richten')
 
 class AddRequest(AddBarter):
     submit = SubmitField('Um Hilfe fragen')

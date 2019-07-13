@@ -1,6 +1,6 @@
 #from app import app
 from flask import Flask, render_template, request, flash, session, url_for, abort, redirect
-from app.forms import LoginForm, RegistrationForm, AddOffer, AddRequest, ForgotPw
+from app.forms import LoginForm, RegistrationForm, AddBarter, AddOffer, AddRequest, ForgotPw
 from app.models import *
 
 app = Flask(__name__)
@@ -88,42 +88,54 @@ def forgot_pw():
 
 @app.route('/add_request', methods=['GET', 'POST'])
 def add_request():
-    if request.method == 'GET':
+    form = AddBarter()
+
+    if request.method == 'POST':
+        user = User(session['email'])
+        title = request.form['title']
+        tags = request.form['tags']
+        text = request.form['text']
+        payment = request.form['payment']
+        if form.validate_on_submit():
+            user.add_request(title, tags, text, payment)
+            return redirect(url_for('/index'))
+
+    else:
         try:
-            User(session['email'])
-            #TODO implement form to add new request
+            # for testing -> logged in user is simulated
+            # uncommend following line
+            #User(session['email'])
+            user = True
         except:
             flash('Melde dich bitte zuerst an:', 'warning')
             return redirect('/login')
-    form = AddRequest()
-    user = User(session['email'])
-    title = request.form['title']
-    tags = request.form['tags']
-    text = request.form['text']
-    payment = request.form['payment']
-
-    if form.validate_on_submit():
-        user.add_request(title, tags, text, payment)
-        return redirect(url_for('/index'))
-
-    return render_template('forgot_pw.html', title='Login', form=form)
+    return render_template('add_request.html', title='Suche Hilfe', form=form)
 
 
 @app.route('/add_offer', methods=['GET', 'POST'])
 def add_offer():
-    if not User(session['email']):
-        flash('Melde dich bitte zuerst an:', 'warning')
-        return redirect('/login')
-    form = AddOffer()
-    user = User(session['email'])
-    title = request.form['title']
-    tags = request.form['tags']
-    text = request.form['text']
-    payment = request.form['payment']
+    form = AddBarter()
 
-    user.add_offer(title, tags, text, payment)
-    return redirect(url_for('/index'))
+    if request.method == 'POST':
+        user = User(session['email'])
+        title = request.form['title']
+        tags = request.form['tags']
+        text = request.form['text']
+        payment = request.form['payment']
+        if form.validate_on_submit():
+            user.add_request(title, tags, text, payment)
+            return redirect(url_for('/index'))
 
+    else:
+        try:
+            # for testing -> logged in user is simulated
+            # uncommend following line
+            # User(session['email'])
+            user = True
+        except:
+            flash('Melde dich bitte zuerst an:', 'warning')
+            return redirect('/login')
+    return render_template('add_offer.html', title='Suche Hilfe', form=form)
 
 @app.route("/about")
 def about():

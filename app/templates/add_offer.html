@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block content %}
+        <div class="content-section col-xs-12 col-sm-12 col-md-9 col-lg-6 col-xl-4 container-fluid padding">
+            <form action="" method="POST" novalidate>
+                {{ form.hidden_tag()}}
+                <fieldset class="form.group">
+                    <legend class="border-bottom mb-4">Was hast du anzubieten?</legend>
+                    <div class="form-group">
+                        {{ form.title.label(class="form-control-label") }}<br>
+                        {% if form.title.errors %}
+                            {{ form.title(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                     <div class="form-group">
+                        {{ form.tags.label(class="form-control-label") }}<br>
+                         {% if form.tags.errors %}
+                            {{ form.tags(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.tags.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                        {{ form.tags(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.tags.label(class="form-control-label") }}<br>
+                         {% if form.text.errors %}
+                            {{ form.text(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.text.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                        {{ form.text(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.payments.label(class="form-control-label") }}<br>
+                         {% if form.payments.errors %}
+                            {{ form.payments(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.payments.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                        {{ form.payments(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+
+            </form>
+            <div class="border-top pt-3">
+    </div>
+        </div>
+
+{% endblock content %}
