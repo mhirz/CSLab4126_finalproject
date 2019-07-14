@@ -1,2 +1,6 @@
-.idea/workspace.xml
-
+.idea/*
+venv/*
+app/__pycache__
+app/__init__.pyc
+config.pyc
+__pycache__
