@@ -1,6 +1,6 @@
 .idea/*
 venv/*
-app/__pycache__
+app/__pycache__/*
 app/__init__.pyc
 config.pyc
-__pycache__
+__pycache__/*
