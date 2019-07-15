@@ -1,6 +1,8 @@
 from py2neo import Graph, Node, Relationship
+from py2neo.ogm import *
 from passlib.hash import bcrypt
 from datetime import datetime
+#from app import app
 import os
 import uuid
 
@@ -9,12 +11,23 @@ import uuid
 #username = os.environ.get('NEO4J_USERNAME')
 #password = os.environ.get('NEO4J_PASSWORD')
 
-graph = Graph("bolt://13.80.109.161:7687", auth=("neo4j", "!Markus_Dave!"))
-#graph = Graph(url + '/db/data/', username=username, password=password)
+graph = Graph("bolt://" + "40.74.61.226" + ":7687", auth=("neo4j", "!Markus_Dave!"))
+# graph = Graph(app.config['DB_IP_BOLT'], auth=("neo4j", "!Markus_Dave!"))
+# graph = Graph(url + '/db/data/', username=username, password=password)
 # delete following line
 #graph = Graph()
 
-class User:
+class User(GraphObject):
+    __primarykey__ = "email"
+
+    firstName = Property()
+    lastName = Property()
+    email = Property()
+    password = Property()
+
+    # requests = RelatedFrom("Request", "has_a")
+    # offers = RelatedFrom("Request", "offers")
+    
     def __init__(self, firstname, lastname, email, password):
         self.firstname = firstname
         self.lastname = lastname
@@ -23,7 +36,8 @@ class User:
 
 
     def find(self):
-        user = graph.find_one("User", "email", self.email)
+        # user = graph.find_one("User", "email", self.email) - old
+        user = User.match(graph, self.email).first()
         return user
 
 
@@ -34,13 +48,13 @@ class User:
 
     def register(self):
         if not self.find():
-            user = Node("User",
-                        firstname=self.firstname,
-                        lastname=self.lastname,
-                        email=self.email,
-                        password=self.password)
+            # user = User("User", #before a Node was created ogm uses the class itself
+            #             firstname=self.firstname,
+            #             lastname=self.lastname,
+            #             email=self.email,
+            #             password=self.password)
 
-            graph.create(user)
+            graph.push(self)
             return True
         else:
             return False

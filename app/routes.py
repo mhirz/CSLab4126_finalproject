@@ -2,6 +2,7 @@
 from flask import Flask, render_template, request, flash, session, url_for, abort, redirect
 from app.forms import LoginForm, RegistrationForm, AddBarter, AddOffer, AddRequest, ForgotPw
 from app.models import *
+import bcrypt
 
 app = Flask(__name__)
 
@@ -39,19 +40,25 @@ def register():
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
-        password = bcrypt.encrypt(request.form['password'])
+        # password = bcrypt.encrypt(request.form['password']) -- old
+        password = bcrypt.hashpw(str(request.form['password']).encode('utf-8'), bcrypt.gensalt())
         # query iuser from database
-        #user =
-
+        user = User(firstname, 
+                lastname,
+                email,
+                password)
+        
         if form.validate_on_submit():
             # username must not exist in the database yet
-            if not User(firstname, lastname, email, password).register():
+            # if not User(firstname, lastname, email, password).register():
+            if(user.register()):
                 flash('Diese Email wird bereits verwendet. Bitte wähle eine andere', 'warning')
                 return redirect('/register')
 
-            # if registration successful -> redirected to login
-            flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
-            return redirect('/login')
+            if(user.register()):#registration successful -> redirected to login
+                flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
+                return redirect('/login')
+
         flash('Well!', 'warning')
 
     return render_template('register.html', title = 'Register', form = form)
