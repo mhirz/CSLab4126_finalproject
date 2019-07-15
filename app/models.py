@@ -5,13 +5,14 @@ from datetime import datetime
 #from app import app
 import os
 import uuid
+import bcrypt
 
 # Dave bitte implementiern.
 #url = os.environ.get('GRAPHENEDB_URL', 'http://40.68.34.104:7687')
 #username = os.environ.get('NEO4J_USERNAME')
 #password = os.environ.get('NEO4J_PASSWORD')
 
-graph = Graph("bolt://" + "40.74.61.226" + ":7687", auth=("neo4j", "!Markus_Dave!"))
+graph = Graph("bolt://" + "213.199.133.252" + ":7687", auth=("neo4j", "!Markus_Dave!"))
 # graph = Graph(app.config['DB_IP_BOLT'], auth=("neo4j", "!Markus_Dave!"))
 # graph = Graph(url + '/db/data/', username=username, password=password)
 # delete following line
@@ -20,13 +21,13 @@ graph = Graph("bolt://" + "40.74.61.226" + ":7687", auth=("neo4j", "!Markus_Dave
 class User(GraphObject):
     __primarykey__ = "email"
 
-    firstName = Property()
-    lastName = Property()
+    firstname = Property()
+    lastname = Property()
     email = Property()
     password = Property()
 
-    # requests = RelatedFrom("Request", "has_a")
-    # offers = RelatedFrom("Request", "offers")
+    requests = RelatedTo("Request")
+    offers = RelatedTo("Request")
     
     def __init__(self, firstname, lastname, email, password):
         self.firstname = firstname
@@ -38,6 +39,11 @@ class User(GraphObject):
     def find(self):
         # user = graph.find_one("User", "email", self.email) - old
         user = User.match(graph, self.email).first()
+        return user
+
+    def find_by_email(email):
+        # user = graph.find_one("User", "email", self.email) - old
+        user = User.match(graph, email).first()
         return user
 
 
@@ -60,63 +66,85 @@ class User(GraphObject):
             return False
 
 
-    def verify_password(self, password):
+    def verify_password(self, plainpw):
         user = self.find()
         if user:
-            return bcrypt.verify(password, user['password'])
+            return bcrypt.checkpw(plainpw.encode('utf-8'), user.password)
         else:
             return False
 
 
-    def add_offer(self, title, tags, text, payment):
+    def add_offer(self, title, text): # deactivated whiile in development payment tags,
         import uuid
 
         user = self.find()
-        offer = Node(
-            "offer",
-            id=str(uuid.uuid4()),
-            title=title,
-            text=text,
-            tag=tags,
-            payment=payment,
-            timestamp=timestamp(),
-            date=date()
-        )
-        rel = Relationship(user, "CREATED", offer)
-        graph.create(rel)
+        offer = Request(title, text, user)
 
-        tags = [x.strip() for x in tags.lower().split(' ')]
-        for t in tags:
-            # if label is not found it is created
-            tag = graph.merge_one("Tag", "name", t)
-            rel = Relationship(tag, "T TAGGED", offer)
-            graph.create(rel)
+        user.offers.add(offer)
+        graph.push(user)
+
+    #TODO
+        # tags = [x.strip() for x in tags.lower().split(' ')]
+        # for t in tags:
+        #     # if label is not found it is created
+        #     tag = graph.merge_one("Tag", "name", t)
+        #     rel = Relationship(tag, "T TAGGED", offer)
+        #     graph.create(rel)
 
 
-    def add_request(self, title, tags, text, payment):
+    def add_request(self, title, text): # deactivated whiile in development payment tags,
         import uuid
 
         user = self.find()
-        request = Node(
-            "request",
-            id=str(uuid.uuid4()),
-            author=self.mail,
-            title=title,
-            text=text,
-            tag=tags,
-            payment=payment,
-            timestamp=timestamp(),
-            date=date()
-        )
-        rel = Relationship(user, "CREATED", request)
-        graph.create(rel)
+        request = Request(title, text, user)
 
-        tags = [x.strip() for x in tags.lower().split(' ')]
-        for t in tags:
-            tag = graph.merge_one("Tag", "name", t)
-            rel = Relationship(tag, "T TAGGED", request)
-            graph.create(rel)
+        user.requests.add(request)
+        graph.push(user)
+
+    #TODO
+        # tags = [x.strip() for x in tags.lower().split(' ')]
+        # for t in tags:
+        #     tag = graph.merge_one("Tag", "name", t)
+        #     rel = Relationship(tag, "T TAGGED", request)
+        #     graph.create(rel)
+            
 
 
-class Request:
-    pass
+class Request(GraphObject):
+    __primarykey__ = "slug"
+
+    name = Property()
+    text = Property()
+    slug = Property() # = creatingUser# + name | Num of created requests
+
+    offering = RelatedFrom(User)
+    requesting = RelatedFrom(User)
+
+    def __init__(self, name, text, creatingUser):
+        self.name = name
+        self.text = text
+        self.slug = creatingUser.email + "_" + name
+
+    def get_all_offers():
+        offers = graph.run("MATCH (u:User)-[:OFFERS]->(r:Request) RETURN r, u")
+        results_list = []
+
+        for record in offers:
+            record_dir = {"title": record["r"]["name"],
+                            "text": record["r"]["text"],
+                            "tag": "#tester"}
+            results_list.append(record_dir)
+            
+        return results_list
+
+    def get_all_requests():
+        requests = graph.run("MATCH (u:User)-[:REQUESTS]->(r:Request) RETURN r, u")
+        results_list = []
+
+        for record in requests:
+            record_dir = {"title": record["r"]["name"],
+                            "text": record["r"]["text"],
+                            "tag": "#tester"}
+            results_list.append(record_dir)
+
+        return results_list

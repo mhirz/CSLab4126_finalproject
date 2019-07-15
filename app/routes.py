@@ -9,26 +9,18 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     # TODO: function to get requests & offers from DB
-    offers = [{"title":"Englisch Nachhilfe",
-             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
-             "tag":"#nachhilfe #englisch #schule"},{"title":"Englisch Nachhilfe",
-             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
-             "tag":"#nachhilfe #englisch #schule"},{"title":"Englisch Nachhilfe",
-             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
-             "tag":"#nachhilfe #englisch #schule"},{"title":"Englisch Nachhilfe",
-             "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
-             "tag":"#nachhilfe #englisch #schule"}]
-    requests = [{"title": "Anhänger",
-             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
-             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
-             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
-             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
-             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
-             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
-             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
-             "tag": "#anhänger #transpoert #auto"},{"title": "Anhänger",
-             "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
-             "tag": "#anhänger #transpoert #auto"}]
+    
+    requests = Request.get_all_requests()
+    offers = Request.get_all_offers()
+
+    # offers = [{"title":"Englisch Nachhilfe",
+    #          "text":"Falls wer Hilfe in Englisch in der Oberstufe braucht, stehe ich gern zur Verfügung",
+    #          "tag":"#nachhilfe #englisch #schule"}]
+
+    # requests = [{"title": all_requests["r"]["name"]
+    #          "text": "Es wär super wenn mir wer einen Anhänger borgen könnte, damit ich mein Motorrad in die Werkstatt bringen kann",
+    #          "tag": "#anhänger #transpoert #auto"}]
+
     return render_template('index.html', title="Startseite", offers=offers, requests=requests)
 
 
@@ -51,15 +43,16 @@ def register():
         if form.validate_on_submit():
             # username must not exist in the database yet
             # if not User(firstname, lastname, email, password).register():
-            if(user.register()):
+            if(user.register() == False):
                 flash('Diese Email wird bereits verwendet. Bitte wähle eine andere', 'warning')
                 return redirect('/register')
 
-            if(user.register()):#registration successful -> redirected to login
-                flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
+            if(user.register() == True):#registration successful -> redirected to login
+                # flash(f'{form.firstname.data} es wurde ein Account für dich erstellt!', 'success')
+                flash('Es wurde ein Account für dich erstellt!', 'success')
                 return redirect('/login')
 
-        flash('Well!', 'warning')
+        # flash('Well!', 'warning')
 
     return render_template('register.html', title = 'Register', form = form)
 
@@ -73,7 +66,8 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        user = User(email)
+        user = User.find_by_email(email)
+        
 
         # if form validates correctly
         if form.validate_on_submit():
@@ -81,8 +75,8 @@ def login():
                 flash("Please try again!", 'warning')
                 return redirect('/login')
             else:
-                session['username'] = user.username
-                flash(f'{form.firstname.data} du bist erfolgreich angemeldet!', 'success')
+                session['email'] = user.email
+                flash(f'{user.firstname} du bist erfolgreich angemeldet!', 'success')
                 return redirect('/')
     return render_template('login.html', title='Login', form=form)
 
@@ -98,21 +92,23 @@ def add_request():
     form = AddBarter()
 
     if request.method == 'POST':
-        user = User(session['email'])
+        # user = User(session['email'])
+        user = User.find_by_email(session['email'])
         title = request.form['title']
-        tags = request.form['tags']
+        # tags = request.form['tags'] #deactivated for testing
         text = request.form['text']
-        payment = request.form['payment']
+        # payment = request.form['payment'] #deactivated for testing
         if form.validate_on_submit():
-            user.add_request(title, tags, text, payment)
-            return redirect(url_for('/index'))
+            # user.add_request(title, tags, text, payment)
+            user.add_request(title, text)
+            return redirect(url_for('index'))
 
     else:
         try:
             # for testing -> logged in user is simulated
             # uncommend following line
-            #User(session['email'])
-            user = True
+            User.find_by_email(session['email'])
+            # user = True
         except:
             flash('Melde dich bitte zuerst an:', 'warning')
             return redirect('/login')
@@ -124,21 +120,23 @@ def add_offer():
     form = AddBarter()
 
     if request.method == 'POST':
-        user = User(session['email'])
+        # user = User(session['email'])
+        user = User.find_by_email(session['email'])
         title = request.form['title']
-        tags = request.form['tags']
+        # tags = request.form['tags'] #deactivated for testing
         text = request.form['text']
-        payment = request.form['payment']
+        # payment = request.form['payment'] #deactivated for testing
         if form.validate_on_submit():
-            user.add_request(title, tags, text, payment)
-            return redirect(url_for('/index'))
+            # user.add_offer(title, tags, text, payment)
+            user.add_offer(title, text)
+            return redirect(url_for('index'))
 
     else:
         try:
             # for testing -> logged in user is simulated
             # uncommend following line
-            # User(session['email'])
-            user = True
+            User.find_by_email(session['email'])
+            # user = True
         except:
             flash('Melde dich bitte zuerst an:', 'warning')
             return redirect('/login')
